@@ -8,6 +8,11 @@
         "cookTime": "35 minutes",
         "totalTime": "1 hour",
         "servings": 10,
+        "highlights": [
+            "Vegetarian",
+            "Healthy",
+            "Easy clean-up"
+        ],
         "ingredients": [
             "3 Eggplant, peeled and thinly sliced",
             "3 Large eggs",
@@ -26,7 +31,7 @@
     },
     {
         "name": "Lasagna",
-        "featured": false,
+        "featured": true,
         "image" : "lasagna",
         "description": "Layers of goodness in this cheesy delight.",
         "prepTime": "30 minutes",
@@ -110,7 +115,7 @@
     },
     {
         "name": "Monterey Chicken",
-        "featured": true,
+        "featured": false,
         "image" : "monterey chicken",
         "description": "Classic Monterey Chicken, worth the time!",
         "prepTime": "45 minutes",
@@ -140,7 +145,7 @@
     },
     {
         "name": "Twice-baked potatoes",
-        "featured": false,
+        "featured": true,
         "image" : "baked potato",
         "description": "A fantastic starchy side.",
         "prepTime": "30 minutes",

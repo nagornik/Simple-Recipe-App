@@ -10,7 +10,7 @@ import SwiftUI
 struct FeaturedView: View {
     
     @EnvironmentObject var model: RecipeModel
-    @State var tabNumber = 2
+    @State var tabNumber = 4
     @State var sheetShow = false
     
     var body: some View {
@@ -40,12 +40,13 @@ struct FeaturedView: View {
                                             Text(model.recipesArray[recipe].name)
                                                 .font(Font.custom("Avenir", size: 24))
                                                 .padding(8)
+                                                
                                         }
                                         .frame(width: geo.size.width, height: geo.size.height-40)
                                         
                                         
                                     }
-                                    .tag(recipe)
+                                    
                                     .background(.white)
                                     .cornerRadius(20)
                                     .shadow(radius: 5)
@@ -61,7 +62,7 @@ struct FeaturedView: View {
                         
                         .padding(g.size.width/20)
 //                        .frame(width: g.size.width)
-                        Spacer()
+//                        Spacer()
                     }
                     
                     .frame(width: g.size.width)
@@ -94,11 +95,16 @@ struct FeaturedView: View {
     }
     
     func firstFeaturedIndex() {
-        for i in (0..<model.recipesArray.count) {
-            if model.recipesArray[i].featured == true {
-                return tabNumber = i
-            }
+//        for i in (0..<model.recipesArray.count) {
+//            if model.recipesArray[i].featured == true {
+//                return tabNumber = i
+//            }
+//        }
+        
+        let index = model.recipesArray.firstIndex { r in
+            return r.featured
         }
+        tabNumber = index ?? 0
     }
     
 }

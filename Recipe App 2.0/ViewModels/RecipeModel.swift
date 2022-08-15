@@ -13,9 +13,7 @@ class RecipeModel: ObservableObject {
     @Published var recipesArray = [Recipe]()
     
     init() {
-        
-        recipesArray = DataService.getData()
-        
+//        recipesArray = DataService.getLocalData()
     }
     
 }

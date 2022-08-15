@@ -13,21 +13,34 @@ struct RecipeListView: View {
     
     var body: some View {
         
-        
-        
         NavigationView {
-            List (model.recipesArray) { recipe in
-                
-                NavigationLink {
-                    RecipeDetailView(recipe: recipe)
-                } label: {
-                    OneListItem(recipe: recipe)
+            VStack {
+                Text("Swipe left to add a Heart")
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
+                List (model.recipesArray) { recipe in
+                    NavigationLink {
+                        RecipeDetailView(recipe: recipe)
+                    } label: {
+                        OneListItem(recipe: recipe)
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                        Button {
+                            let index = model.recipesArray.firstIndex(where: {$0.id == recipe.id})
+                            model.recipesArray[index!].featured.toggle()
+                            model.recipesArray[index!].id = UUID()
+                        } label: {
+                            Image(systemName: "heart")
+                                .foregroundColor(.white)
+                        }
+                        .tint(.red)
+                    }
+                    .listRowSeparator(.hidden)
                 }
-
+                .listStyle(.plain)
                 
-                
-                
-            }.navigationBarTitle(Text("Menu"))
+            }
+            .navigationBarTitle(Text("Menu"))
         }
         
         
@@ -39,5 +52,6 @@ struct RecipeListView: View {
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeListView()
+            .environmentObject(RecipeModel())
     }
 }

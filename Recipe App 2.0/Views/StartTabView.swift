@@ -30,7 +30,8 @@ struct StartTabView: View {
                 }
                 .tag(1)
             
-        }.accentColor(.black)
+        }
+        .accentColor(.primary)
         
         
         
@@ -41,5 +42,6 @@ struct StartTabView_Previews: PreviewProvider {
     static var previews: some View {
         StartTabView()
             .environmentObject(RecipeModel())
+            .preferredColorScheme(.dark)
     }
 }

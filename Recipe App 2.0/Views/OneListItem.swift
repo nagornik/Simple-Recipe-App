@@ -30,6 +30,16 @@ struct OneListItem: View {
                     .font(.subheadline)
                     .fontWeight(.light)
             }
+            
+            
+            Spacer()
+            
+            if recipe.featured {
+                Image(systemName: "heart.fill")
+                    .foregroundColor(.red)
+                    .padding(4)
+            }
+            
         }
         
         

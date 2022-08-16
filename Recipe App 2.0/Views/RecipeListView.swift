@@ -18,9 +18,11 @@ struct RecipeListView: View {
                 Text("Swipe left to add a Heart")
                     .font(.footnote)
                     .foregroundColor(.secondary)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.trailing)
                 List {
                     ForEach(model.recipesArray) { recipe in
-
+                        
                         NavigationLink {
                             RecipeDetailView(recipe: recipe)
                         } label: {
@@ -28,9 +30,7 @@ struct RecipeListView: View {
                         }
                         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
                             Button {
-                                if let index = model.recipesArray.firstIndex(where: {$0.name == recipe.name}) {
-                                    model.recipesArray[index].featured.toggle()
-                                }
+                                model.markFeatured(recipe: recipe)
                             } label: {
                                 Image(systemName: "heart")
                                     .foregroundColor(.white)
@@ -38,12 +38,18 @@ struct RecipeListView: View {
                             .tint(.red)
                         }
                         
-                        .listRowSeparator(.hidden)
+//                        .listRowSeparator(.hidden)
+                        .listRowBackground(Color("back"))
                     }
                 }
+                
                 .listStyle(.plain)
+//                .listItemTint(Color("back"))
+                .listRowBackground(Color("back"))
+                
                 
             }
+            .background(Color("back"))
             .navigationBarTitle(Text("Menu"))
             
         }

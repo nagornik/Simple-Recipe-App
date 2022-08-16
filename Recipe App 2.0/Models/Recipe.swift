@@ -7,11 +7,9 @@
 
 import Foundation
 
-struct Recipe: Identifiable, Decodable {
+class Recipe: Identifiable, Decodable {
 
-    var id:UUID {
-        UUID()
-    }
+    var id: UUID?
     var name:String
     var featured:Bool
     var image:String

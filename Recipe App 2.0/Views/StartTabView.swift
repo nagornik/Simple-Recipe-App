@@ -13,7 +13,6 @@ struct StartTabView: View {
     
     var body: some View {
         
-        
         TabView(selection: $tabIndex) {
             
             FeaturedView()
@@ -32,8 +31,6 @@ struct StartTabView: View {
             
         }
         .accentColor(.primary)
-        
-        
         
     }
 }

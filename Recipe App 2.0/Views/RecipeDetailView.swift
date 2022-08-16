@@ -11,12 +11,12 @@ struct RecipeDetailView: View {
     
     @EnvironmentObject var model: RecipeModel
     @State var recipe:Recipe
+    @State var dragOffset = CGFloat.zero
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         
         ScrollView {
-            
-            
             
             Image(recipe.image)
                 .resizable()
@@ -39,16 +39,10 @@ struct RecipeDetailView: View {
                         .foregroundColor(.red)
                         .font(.system(size: 36))
                         .onTapGesture {
-                            recipe.featured.toggle()
+                            model.markFeatured(recipe: recipe)
                         }
-                        .onDisappear {
-                            if let index = model.recipesArray.firstIndex(where: {$0.name == recipe.name}) {
-                                model.recipesArray[index].featured = recipe.featured
-                            }
-                        }
+
                 }
-                
-                
                 
                 Divider()
                     .padding()
@@ -104,7 +98,6 @@ struct RecipeDetailView: View {
                     
                 }
                 
-                
             }
             .padding([.leading, .trailing], 20.0)
             .padding(.bottom)
@@ -112,22 +105,35 @@ struct RecipeDetailView: View {
             .cornerRadius(20)
             .padding(.top, -30)
             
-            
-            
-            
         }
+        .background(Color("back"))
+        .cornerRadius(dragOffset == .zero ? 0 : 30)
+        .offset(x: dragOffset/8)
+        .rotation3DEffect(.degrees(-dragOffset/8), axis: (0,1,0))
+        .gesture(
+            DragGesture(minimumDistance: 50)
+                .onChanged({ value in
+                    if value.translation.width > -50 && value.translation.width < 200 {
+                        dragOffset = value.translation.width
+                    } else if value.translation.width > 200 {
+                        dismiss()
+                    }
+                })
+                .onEnded({ _ in
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.7, blendDuration: 1)) {
+                        dragOffset = .zero
+                    }
+                })
+        )
         .edgesIgnoringSafeArea(.top)
-        
-        
-        
         
     }
 }
 
-struct RecipeDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        RecipeDetailView(recipe: RecipeModel().recipesArray[2])
-            .environmentObject(RecipeModel())
-            .preferredColorScheme(.dark)
-    }
-}
+//struct RecipeDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RecipeDetailView(recipe: RecipeModel().recipesArray[2])
+//            .environmentObject(RecipeModel())
+//            .preferredColorScheme(.dark)
+//    }
+//}

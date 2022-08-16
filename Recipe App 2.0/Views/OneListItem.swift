@@ -9,45 +9,54 @@ import SwiftUI
 
 struct OneListItem: View {
     
-    var recipe:Recipe
+    @EnvironmentObject var model: RecipeModel
+    @State var recipe:Recipe
     
     var body: some View {
         
         
-        HStack {
-            Image(recipe.image)
-                .resizable()
-                .scaledToFit()
-                .frame(width: 60, height: 60)
-                .cornerRadius(10)
-                .padding(5)
-                
-            VStack (alignment: .leading) {
-                Text(recipe.name)
-                    .font(.title3)
-                    .fontWeight(.medium)
-                Text(recipe.totalTime)
-                    .font(.subheadline)
-                    .fontWeight(.light)
-            }
+        ZStack {
             
-            
-            Spacer()
-            
-            if recipe.featured {
-                Image(systemName: "heart.fill")
-                    .foregroundColor(.red)
-                    .padding(4)
-            }
-            
+                HStack {
+                    
+                    Image(recipe.image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 60, height: 60)
+                        .cornerRadius(10)
+                        .padding(5)
+                        
+                    VStack (alignment: .leading) {
+                        Text(recipe.name)
+                            .font(.title3.bold())
+                                
+                        Text(recipe.totalTime)
+                            .font(.subheadline)
+                            .fontWeight(.light)
+                            
+                    }
+                    
+                    Spacer()
+    
+                    Image(systemName: recipe.featured ? "heart.fill" : "heart")
+                        .font(.system(size: 20))
+                        .foregroundColor(.red)
+                        .padding(4)
+                        .onTapGesture {
+                            model.markFeatured(recipe: recipe)
+                        }
+                }
+
         }
         
-        
     }
+    
+
 }
 
 struct OneListItem_Previews: PreviewProvider {
     static var previews: some View {
         OneListItem(recipe: RecipeModel().recipesArray[1])
+            .environmentObject(RecipeModel())
     }
 }

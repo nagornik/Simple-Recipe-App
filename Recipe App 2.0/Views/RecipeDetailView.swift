@@ -9,7 +9,8 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     
-    var recipe:Recipe
+    @EnvironmentObject var model: RecipeModel
+    @State var recipe:Recipe
     
     var body: some View {
         
@@ -20,16 +21,34 @@ struct RecipeDetailView: View {
             Image(recipe.image)
                 .resizable()
                 .scaledToFit()
-            
-            
+             
             VStack (alignment: .leading) {
                 
-                Text(recipe.name)
-                    .font(Font.custom("Avenir Black", size: 26))
-                    .padding(.top)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text(recipe.name)
+                            .font(Font.custom("Avenir Black", size: 26))
+                            .padding(.top)
+                        Text(recipe.description)
+                            .font(Font.custom("Avenir", size: 16))
+                    }
+                    
+                    Spacer()
+                    
+                    Image(systemName: recipe.featured ? "heart.fill" : "heart")
+                        .foregroundColor(.red)
+                        .font(.system(size: 36))
+                        .onTapGesture {
+                            recipe.featured.toggle()
+                        }
+                        .onDisappear {
+                            if let index = model.recipesArray.firstIndex(where: {$0.name == recipe.name}) {
+                                model.recipesArray[index].featured = recipe.featured
+                            }
+                        }
+                }
                 
-                Text(recipe.description)
-                    .font(Font.custom("Avenir", size: 16))
+                
                 
                 Divider()
                     .padding()
@@ -108,6 +127,7 @@ struct RecipeDetailView: View {
 struct RecipeDetailView_Previews: PreviewProvider {
     static var previews: some View {
         RecipeDetailView(recipe: RecipeModel().recipesArray[2])
+            .environmentObject(RecipeModel())
             .preferredColorScheme(.dark)
     }
 }

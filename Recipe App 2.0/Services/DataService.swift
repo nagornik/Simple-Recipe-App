@@ -9,21 +9,21 @@ import Foundation
 
 class DataService {
     
-//    static func getLocalData() -> [Recipe] {
-//        if let path = Bundle.main.path(forResource: "recipes", ofType: "json") {
-//            let url = URL(fileURLWithPath: path)
-//            do {
-//                let rawData = try Data(contentsOf: url)
-//                let decoder = JSONDecoder()
-//                let decodedData = try decoder.decode([Recipe].self, from: rawData)
+    static func getLocalData() -> [Recipe] {
+        if let path = Bundle.main.path(forResource: "recipes", ofType: "json") {
+            let url = URL(fileURLWithPath: path)
+            do {
+                let rawData = try Data(contentsOf: url)
+                let decoder = JSONDecoder()
+                let decodedData = try decoder.decode([Recipe].self, from: rawData)
 //                for r in decodedData {
 //                    r.id = UUID()
 //                }
-//                return decodedData
-//            } catch {}
-//        }
-//        return [Recipe]()
-//    }
+                return decodedData
+            } catch {}
+        }
+        return [Recipe]()
+    }
     
     static func getDataFromJsonFromGithub() async -> [Recipe] {
         
@@ -36,9 +36,9 @@ class DataService {
         
         let decodedData = try! JSONDecoder().decode([Recipe].self, from: data)
         
-        for recipe in decodedData {
-            recipe.id = UUID()
-        }
+//        for recipe in decodedData {
+//            recipe.id = UUID()
+//        }
         
         return decodedData
         

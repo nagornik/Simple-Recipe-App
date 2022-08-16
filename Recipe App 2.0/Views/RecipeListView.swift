@@ -18,29 +18,34 @@ struct RecipeListView: View {
                 Text("Swipe left to add a Heart")
                     .font(.footnote)
                     .foregroundColor(.secondary)
-                List (model.recipesArray) { recipe in
-                    NavigationLink {
-                        RecipeDetailView(recipe: recipe)
-                    } label: {
-                        OneListItem(recipe: recipe)
-                    }
-                    .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                        Button {
-                            let index = model.recipesArray.firstIndex(where: {$0.id == recipe.id})
-                            model.recipesArray[index!].featured.toggle()
-                            model.recipesArray[index!].id = UUID()
+                List {
+                    ForEach(model.recipesArray) { recipe in
+
+                        NavigationLink {
+                            RecipeDetailView(recipe: recipe)
                         } label: {
-                            Image(systemName: "heart")
-                                .foregroundColor(.white)
+                            OneListItem(recipe: recipe)
                         }
-                        .tint(.red)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button {
+                                if let index = model.recipesArray.firstIndex(where: {$0.name == recipe.name}) {
+                                    model.recipesArray[index].featured.toggle()
+                                }
+                            } label: {
+                                Image(systemName: "heart")
+                                    .foregroundColor(.white)
+                            }
+                            .tint(.red)
+                        }
+                        
+                        .listRowSeparator(.hidden)
                     }
-                    .listRowSeparator(.hidden)
                 }
                 .listStyle(.plain)
                 
             }
             .navigationBarTitle(Text("Menu"))
+            
         }
         
         
@@ -51,7 +56,11 @@ struct RecipeListView: View {
 
 struct RecipeListView_Previews: PreviewProvider {
     static var previews: some View {
+        let model = RecipeModel()
         RecipeListView()
-            .environmentObject(RecipeModel())
+            .environmentObject(model)
+            .task {
+                model.recipesArray = await DataService.getDataFromJsonFromGithub()
+            }
     }
 }

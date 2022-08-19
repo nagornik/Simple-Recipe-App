@@ -38,11 +38,14 @@ struct RecipeListView: View {
                             .tint(.red)
                         }
                         .listRowBackground(Color("back"))
+                        
                     }
                 }
                 .listStyle(.plain)
                 .listRowBackground(Color("back"))
-                
+                .refreshable {
+                    model.recipesArray.sort(by: {$0.name < $1.name})
+                }
                 
             }
             .background(Color("back"))

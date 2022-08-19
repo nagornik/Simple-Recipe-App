@@ -25,7 +25,6 @@ class DataService {
         
         do {
             let decodedData = try JSONDecoder().decode([Recipe].self, from: data)
-            
             for recipe in decodedData {
                 recipe.id = UUID()
                 recipe.image = "https://raw.githubusercontent.com/nagornik/Simple-Recipe-App/main/img/\(recipe.image.replacingOccurrences(of: " ", with: "-")).jpg"

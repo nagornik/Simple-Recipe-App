@@ -131,6 +131,12 @@ struct RecipeDetailView: View {
                         }
                     })
             )
+            .onAppear(perform: {
+                impact(type: .medium)
+            })
+            .onDisappear(perform: {
+                impact(type: .soft)
+            })
             .ignoresSafeArea()
         }
         

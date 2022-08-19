@@ -42,6 +42,7 @@ struct OneListItem: View {
                         .padding(4)
                         .onTapGesture {
                             model.markFeatured(recipe: recipe)
+                            impact(type: .soft)
                         }
                 }
 

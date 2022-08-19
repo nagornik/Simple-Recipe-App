@@ -15,7 +15,7 @@ struct RecipeListView: View {
         
         NavigationView {
             VStack {
-                Text("Swipe left to add a Heart")
+                Text("Swipe left to Like or Dislike")
                     .font(.footnote)
                     .foregroundColor(.secondary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
@@ -37,14 +37,10 @@ struct RecipeListView: View {
                             }
                             .tint(.red)
                         }
-                        
-//                        .listRowSeparator(.hidden)
                         .listRowBackground(Color("back"))
                     }
                 }
-                
                 .listStyle(.plain)
-//                .listItemTint(Color("back"))
                 .listRowBackground(Color("back"))
                 
                 

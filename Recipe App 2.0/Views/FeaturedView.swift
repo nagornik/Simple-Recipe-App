@@ -64,7 +64,7 @@ struct FeaturedView: View {
                 
                 TabView(selection: $tabNumber) {
                     
-                    ForEach (0..<model.recipesArray.count, id:\.self) { recipe in
+                    ForEach (0..<model.recipesArray.count) { recipe in
                         
                         if model.recipesArray[recipe].featured == true {
                             
@@ -74,10 +74,8 @@ struct FeaturedView: View {
                                     sheetShow.toggle()
                                 } label: {
                                     VStack {
-                                        Image(model.recipesArray[recipe].image)
-                                            .resizable()
-                                            .scaledToFill()
-                                            .clipped()
+                                        
+                                        ImageView(recipeImage: model.recipesArray[recipe].image)
                                         
                                         Text(model.recipesArray[recipe].name)
                                             .font(Font.custom("Avenir", size: 18))
@@ -159,3 +157,4 @@ struct FeaturedView_Previews: PreviewProvider {
             .environmentObject(model)
     }
 }
+

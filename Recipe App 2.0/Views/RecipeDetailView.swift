@@ -21,14 +21,12 @@ struct RecipeDetailView: View {
             Color("back")
                 .ignoresSafeArea()
                 .overlay(
-                    Color.black.opacity(0.5)
+                    Color.black.opacity(0.3)
                 )
             
             ScrollView {
                 
-                Image(recipe.image)
-                    .resizable()
-                    .scaledToFit()
+                ImageView(recipeImage: recipe.image)
                  
                 VStack (alignment: .leading) {
                     
@@ -108,7 +106,7 @@ struct RecipeDetailView: View {
                     
                 }
                 .padding([.leading, .trailing], 20.0)
-                .padding(.bottom)
+                .padding(.bottom, 120)
                 .background(Color("back"))
                 .cornerRadius(20)
                 .padding(.top, -30)
@@ -133,7 +131,7 @@ struct RecipeDetailView: View {
                         }
                     })
             )
-        .edgesIgnoringSafeArea(.top)
+            .ignoresSafeArea()
         }
         
     }

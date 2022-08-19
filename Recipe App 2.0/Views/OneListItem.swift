@@ -19,9 +19,7 @@ struct OneListItem: View {
             
                 HStack {
                     
-                    Image(recipe.image)
-                        .resizable()
-                        .scaledToFit()
+                    ImageView(recipeImage: recipe.image)
                         .frame(width: 60, height: 60)
                         .cornerRadius(10)
                         .padding(5)
@@ -54,9 +52,9 @@ struct OneListItem: View {
 
 }
 
-struct OneListItem_Previews: PreviewProvider {
-    static var previews: some View {
-        OneListItem(recipe: RecipeModel().recipesArray[1])
-            .environmentObject(RecipeModel())
-    }
-}
+//struct OneListItem_Previews: PreviewProvider {
+//    static var previews: some View {
+//        OneListItem(recipe: RecipeModel().recipesArray[1])
+//            .environmentObject(RecipeModel())
+//    }
+//}

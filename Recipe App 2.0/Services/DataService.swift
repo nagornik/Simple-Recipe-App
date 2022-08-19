@@ -6,8 +6,11 @@
 //
 
 import Foundation
+import SwiftUI
 
 class DataService {
+    
+    @EnvironmentObject var model: RecipeModel
     
     // MARK: - Get data JSON on GitHub
     
@@ -25,6 +28,7 @@ class DataService {
             
             for recipe in decodedData {
                 recipe.id = UUID()
+                recipe.image = "https://raw.githubusercontent.com/nagornik/Simple-Recipe-App/main/img/\(recipe.image.replacingOccurrences(of: " ", with: "-")).jpg"
             }
             
             return decodedData
@@ -39,20 +43,33 @@ class DataService {
     
     // MARK: - Get data from local JSON
     
-//    static func getLocalData() -> [Recipe] {
-//        if let path = Bundle.main.path(forResource: "recipes", ofType: "json") {
-//            let url = URL(fileURLWithPath: path)
-//            do {
-//                let rawData = try Data(contentsOf: url)
-//                let decoder = JSONDecoder()
-//                let decodedData = try decoder.decode([Recipe].self, from: rawData)
-//                for r in decodedData {
-//                    r.id = UUID()
-//                }
-//                return decodedData
-//            } catch {}
-//        }
-//        return [Recipe]()
-//    }
+    //    static func getLocalData() -> [Recipe] {
+    //        if let path = Bundle.main.path(forResource: "recipes", ofType: "json") {
+    //            let url = URL(fileURLWithPath: path)
+    //            do {
+    //                let rawData = try Data(contentsOf: url)
+    //                let decoder = JSONDecoder()
+    //                let decodedData = try decoder.decode([Recipe].self, from: rawData)
+    //                for r in decodedData {
+    //                    r.id = UUID()
+    //                }
+    //                return decodedData
+    //            } catch {}
+    //        }
+    //        return [Recipe]()
+    //    }
+    
+    
+    // MARK: - Cache images
+    
+    static var imageCache = [String : Image]()
+    
+    static func getImage(forKey: String) -> Image? {
+        return imageCache[forKey]
+    }
+    
+    static func setImage(image: Image, forKey: String) {
+        imageCache[forKey] = image
+    }
     
 }
